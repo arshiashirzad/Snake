@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Snake"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="BackgroundColor">#240046</SolidColorBrush>
+        <SolidColorBrush x:Key="GridBackgroundColor">#312c40</SolidColorBrush>
+        <SolidColorBrush x:Key="GridLineColor">#454955</SolidColorBrush>
+        <SolidColorBrush x:Key="TextColor">#EBEBEB</SolidColorBrush>
+        <SolidColorBrush x:Key="OverLayColor">#7F000000</SolidColorBrush>
+        <FontFamily x:Key="MainFont"> Assets/#Droid Sans Mono</FontFamily>
     </Application.Resources>
 </Application>
