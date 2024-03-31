@@ -28,7 +28,7 @@ namespace Snake
         {
             int r = Rows / 2;
 
-            for (int c = 1; c <= 4; c++)
+            for (int c = 1; c <= 3; c++)
             {
                 Grid[r, c] = GridValue.Snake;
                 snakePositions.AddFirst(new Position(r, c));
@@ -47,7 +47,7 @@ namespace Snake
                 }
             }
         }
-        private void AddFood()
+        public void AddFood()
         {
             List<Position> empty = new List<Position>(EmptyPositions());
 
@@ -104,7 +104,7 @@ namespace Snake
             }
             return Grid[newHeadPos.Row, newHeadPos.Col];
         }
-        private void Move()
+        public void Move()
         {
             Position newHeadPos = HeadPosition().Translate(Dir);
             GridValue hit = WillHit(newHeadPos);

@@ -31,13 +31,24 @@ namespace Snake
             InitializeComponent();
             gridImages = SetupGrid();
             gameState = new GameState(rows, cols);
+            gameState.AddFood();
 
         }
-        private void Window_Loaded(object sender , RoutedEventArgs e)
+        private async void Window_Loaded(object sender , RoutedEventArgs e)
         {
             Draw();
+            await GameLoop();
         }
         
+        private async Task GameLoop()
+        {
+            while (!gameState.GameOver)
+            {
+                await Task.Delay(100);
+                gameState.Move();
+                Draw();
+            }
+        }  
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (gameState.GameOver)
@@ -53,10 +64,10 @@ namespace Snake
                     gameState.ChangeDirection(Direction.Right);
                     break;
                 case Key.Up:
-                    gameState.ChangeDirection(Direction.Up);
+                    gameState.ChangeDirection(Direction.Down);
                     break;
                 case Key.Down:
-                    gameState.ChangeDirection(Direction.Down);
+                    gameState.ChangeDirection(Direction.Up);
                     break;
 
             }
