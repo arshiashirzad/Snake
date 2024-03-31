@@ -31,7 +31,6 @@ namespace Snake
             InitializeComponent();
             gridImages = SetupGrid();
             gameState = new GameState(rows, cols);
-            gameState.AddFood();
 
         }
         private async void Window_Loaded(object sender , RoutedEventArgs e)
