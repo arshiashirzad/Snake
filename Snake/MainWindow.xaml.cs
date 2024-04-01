@@ -33,6 +33,7 @@ namespace Snake
             gameState = new GameState(rows, cols);
 
         }
+<<<<<<< HEAD
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Draw();
@@ -48,6 +49,23 @@ namespace Snake
                 Draw();
             }
         }
+=======
+        private async void Window_Loaded(object sender , RoutedEventArgs e)
+        {
+            Draw();
+            await GameLoop();
+        }
+        
+        private async Task GameLoop()
+        {
+            while (!gameState.GameOver)
+            {
+                await Task.Delay(100);
+                gameState.Move();
+                Draw();
+            }
+        }  
+>>>>>>> a9ae7b7ec1f302f5237f0aa9d35d8256b3f6662a
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (gameState.GameOver)
