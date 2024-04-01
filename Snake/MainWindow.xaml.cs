@@ -41,6 +41,12 @@ namespace Snake
             Overlay.Visibility = Visibility.Hidden;
             await GameLoop();
         }
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Draw();
+            await GameLoop();
+        }
+
         private async Task GameLoop()
         {
             while (!gameState.GameOver)
@@ -50,101 +56,88 @@ namespace Snake
                 Draw();
             }
         }
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-                Draw();
-                await GameLoop();
-        }
-
-        private async Task GameLoop()
-            {
-                while (!gameState.GameOver)
-                {
-                    await Task.Delay(100);
-                    gameState.Move();
-                    Draw();
-                }
-        }
         private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (Overlay.Visibility == Visibility.Visible)
             {
-                if (Overlay.Visibility == Visibility.Visible)
-                {
-                    e.Handled = true;
-                }
-                if (!gameRunning)
-                {
-                    gameRunning = true;
-                    await RunGame();
-                    gameRunning = false;
-                }
-          }
-          private void Window_KeyDown(object sender, KeyEventArgs e)
-            {
-                if (gameState.GameOver)
-                {
-                    return;
-                }
-                switch (e.Key)
-                {
-                    case Key.Left:
-                        gameState.ChangeDirection(Direction.Left);
-                        break;
-                    case Key.Right:
-                        gameState.ChangeDirection(Direction.Right);
-                        break;
-                    case Key.Up:
-                        gameState.ChangeDirection(Direction.Down);
-                        break;
-                    case Key.Down:
-                        gameState.ChangeDirection(Direction.Up);
-                        break;
-
-                }
+                e.Handled = true;
             }
-            private Image[,] SetupGrid()
+            if (!gameRunning)
             {
-                Image[,] images = new Image[rows, cols];
-                GameGrid.Rows = rows;
-                GameGrid.Columns = cols;
-                for (int r = 0; r < rows; r++)
+                gameRunning = true;
+                await RunGame();
+                gameRunning = false;
+            }
+        }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (gameState.GameOver)
+            {
+                return;
+            }
+            switch (e.Key)
+            {
+                case Key.Left:
+                    gameState.ChangeDirection(Direction.Left);
+                    break;
+                case Key.Right:
+                    gameState.ChangeDirection(Direction.Right);
+                    break;
+                case Key.Up:
+                    gameState.ChangeDirection(Direction.Down);
+                    break;
+                case Key.Down:
+                    gameState.ChangeDirection(Direction.Up);
+                    break;
+
+            }
+        }
+        private Image[,] SetupGrid()
+        {
+            Image[,] images = new Image[rows, cols];
+            GameGrid.Rows = rows;
+            GameGrid.Columns = cols;
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
                 {
-                    for (int c = 0; c < cols; c++)
+                    Image image = new Image
                     {
-                        Image image = new Image
-                        {
-                            Source = Images.Empty
-                        };
-                        images[r, c] = image;
-                        GameGrid.Children.Add(image);
-
-                    }
+                        Source = Images.Empty
+                    };
+                    images[r, c] = image;
+                    GameGrid.Children.Add(image);
 
                 }
-                return images;
+
             }
-            private void Draw()
+            return images;
+        }
+        private void Draw()
+        {
+            DrawGrid();
+            ScoreText.Text = $"SCORE {gameState.Score}";
+        }
+        private void DrawGrid()
+        {
+            for (int r = 0; r < rows; r++)
             {
-                DrawGrid();
-                ScoreText.Text = $"SCORE {gameState.Score}";
-            }
-            private void DrawGrid()
-            {
-                for (int r = 0; r < rows; r++)
+                for (int c = 0; c < cols; c++)
                 {
-                    for (int c = 0; c < cols; c++)
-                    {
-                        GridValue gridVal = gameState.Grid[r, c];
-                        gridImages[r, c].Source = GridValueToImage[gridVal];
-                    }
+                    GridValue gridVal = gameState.Grid[r, c];
+                    gridImages[r, c].Source = GridValueToImage[gridVal];
+                }
 
-                }
             }
-            private async Task ShowCountDown()
+        }
+        private async Task ShowCountDown()
+        {
+            for (int i = 3; i >= 1; i--)
             {
-                for (int i = 3; i >= 1; i--)
-                {
-                    OverlayText.Text = i.ToString();
-                    await Task.Delay(500);
-                }
+                OverlayText.Text = i.ToString();
+                await Task.Delay(500);
             }
+        }
+
     }
+}
