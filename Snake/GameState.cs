@@ -129,6 +129,7 @@ namespace Snake
         {
             if (dirChanges.Count > 0)
             {
+                Dir = dirChanges.First.Value;
                 dirChanges.RemoveFirst();
             }
             Position newHeadPos = HeadPosition().Translate(Dir);
