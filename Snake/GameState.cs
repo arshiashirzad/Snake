@@ -23,6 +23,7 @@ namespace Snake
             Grid = new GridValue[Rows, Cols];
             Dir = Direction.Right;
             AddSnake();
+            AddFood();
         }
         private void AddSnake()
         {
